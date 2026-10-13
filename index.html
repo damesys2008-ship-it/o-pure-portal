@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>O-Pure — Choisissez votre espace</title>
+  <link rel="icon" href="assets/favicon.ico" sizes="16x16 32x32 48x48">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta name="description" content="Portail O-Pure : l'espace Client pour les habitants, et l'espace Pilotage pour les décideurs d'Orléans Métropole. Prototype de hackathon.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       O-PURE — Portail d'accueil
+       Une page, deux espaces : Client (habitants) à gauche,
+       Pilotage (décideurs) à droite. Même charte que les prototypes :
+       blancs, bleus, #007F88 pour les boutons.
+       ============================================================ */
+    :root {
+      --blanc: #FFFFFF;
+      --fond: #F4F8FB;
+      --surface-2: #EAF2F7;
+      --bordure: #D5E3EC;
+      --bleu-nuit: #0B2545;
+      --bleu-logo: #034A71;
+      --bleu-pale: #DCEBF7;
+      --texte: #0B2545;
+      --texte-doux: #4A6178;
+      --action: #007F88;
+      --action-survol: #006A72;
+      --action-pale: #E0F2F3;
+      --vert-logo: #90C150;
+      --rayon: 12px;
+      --duree: 180ms;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body {
+      font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+      color: var(--texte); background: var(--fond);
+      display: flex; flex-direction: column; min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, p, ul { margin: 0; }
+    a { color: inherit; }
+    :focus-visible { outline: 3px solid rgba(0, 127, 136, 0.45); outline-offset: 3px; border-radius: 8px; }
+
+    /* ---------- En-tête : le logo complet ---------- */
+    .entete {
+      background: var(--blanc); border-bottom: 3px solid var(--action);
+      padding: 20px 24px 18px; text-align: center;
+    }
+    .entete img { height: 96px; width: auto; display: inline-block; }
+    .entete p { margin-top: 10px; font-size: 16px; color: var(--texte-doux); }
+    .entete strong { color: var(--texte); font-weight: 600; }
+
+    /* ---------- Les deux espaces ---------- */
+    .espaces { flex: 1; display: grid; grid-template-columns: 1fr 1fr; }
+
+    .espace {
+      position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 56px 40px; gap: 18px;
+    }
+    .espace-client { background: var(--blanc); }
+    .espace-pilotage { background: var(--surface-2); }
+    /* Fine séparation verticale entre les deux moitiés */
+    .espace-pilotage::before {
+      content: ""; position: absolute; left: 0; top: 12%; bottom: 12%; width: 1px; background: var(--bordure);
+    }
+
+    .pastille {
+      width: 88px; height: 88px; border-radius: 50%; display: grid; place-items: center;
+      background: var(--action-pale); color: var(--action);
+    }
+    .espace-pilotage .pastille { background: var(--blanc); color: var(--bleu-logo); }
+    .pastille svg { width: 42px; height: 42px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+
+    .surtitre { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--action); }
+    .espace-pilotage .surtitre { color: var(--bleu-logo); }
+
+    .espace h2 { font-size: clamp(30px, 3.4vw, 44px); line-height: 1.1; font-weight: 700; color: var(--bleu-logo); letter-spacing: -0.01em; }
+    .espace h2 span { color: var(--action); }
+    .espace-pilotage h2 span { color: #2A6FB0; }
+
+    .accroche { max-width: 420px; font-size: 18px; line-height: 1.5; color: var(--texte-doux); }
+
+    .atouts { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px; text-align: left; }
+    .atouts li { display: flex; align-items: center; gap: 10px; font-size: 16px; }
+    .atouts li::before {
+      content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--vert-logo);
+    }
+
+    .bouton {
+      margin-top: 10px; display: inline-flex; align-items: center; gap: 10px;
+      min-height: 52px; padding: 0 28px; border-radius: 10px;
+      background: var(--action); color: var(--blanc); text-decoration: none;
+      font-size: 17px; font-weight: 600;
+      box-shadow: 0 1px 2px rgba(11, 37, 69, 0.08), 0 6px 16px rgba(0, 127, 136, 0.18);
+      transition: background-color var(--duree), transform var(--duree), box-shadow var(--duree);
+    }
+    .bouton:hover { background: var(--action-survol); transform: translateY(-2px); box-shadow: 0 2px 4px rgba(11, 37, 69, 0.1), 0 10px 22px rgba(0, 127, 136, 0.24); }
+    .bouton:active { transform: translateY(0); }
+    .bouton svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform var(--duree); }
+    .bouton:hover svg { transform: translateX(3px); }
+
+    /* ---------- Pied de page ---------- */
+    .pied {
+      background: var(--blanc); border-top: 1px solid var(--bordure);
+      padding: 16px 24px; text-align: center; font-size: 13px; color: var(--texte-doux);
+    }
+
+    /* ---------- Téléphone : les deux espaces l'un sous l'autre ---------- */
+    @media (max-width: 760px) {
+      .entete { padding: 16px 16px 14px; }
+      .entete img { height: 72px; }
+      .entete p { font-size: 15px; }
+      .espaces { grid-template-columns: 1fr; }
+      .espace { padding: 40px 20px; gap: 14px; }
+      .espace-pilotage::before { left: 12%; right: 12%; top: 0; bottom: auto; width: auto; height: 1px; }
+      .pastille { width: 72px; height: 72px; }
+      .pastille svg { width: 34px; height: 34px; }
+      .accroche { font-size: 16px; }
+      .bouton { width: 100%; max-width: 360px; justify-content: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .bouton, .bouton svg { transition: none; }
+      .bouton:hover { transform: none; }
+      .bouton:hover svg { transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="entete">
+    <img src="assets/o-pure-logo.png" alt="O-Pure" width="544" height="400">
+    <p>L'eau d'Orléans Métropole face aux PFAS. <strong>Choisissez votre espace.</strong></p>
+  </header>
+
+  <main class="espaces">
+
+    <!-- ===== Espace Client (habitants) ===== -->
+    <section class="espace espace-client" aria-labelledby="titre-client">
+      <div class="pastille" aria-hidden="true">
+        <!-- Icône : une maison avec une goutte -->
+        <svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9v11h14V9"/><path d="M12 11.2s2.6 2.7 2.6 4.6a2.6 2.6 0 0 1-5.2 0c0-1.9 2.6-4.6 2.6-4.6z"/></svg>
+      </div>
+      <p class="surtitre">Pour les habitants</p>
+      <h2 id="titre-client">O-Pure <span>Client</span></h2>
+      <p class="accroche">Mon eau du robinet est-elle sûre&nbsp;? La réponse pour mon adresse, en un coup d'œil.</p>
+      <ul class="atouts">
+        <li>La qualité de l'eau de mon quartier</li>
+        <li>Comment l'eau est traitée</li>
+        <li>Robinet ou bouteille&nbsp;?</li>
+      </ul>
+      <!-- LIEN À COMPLÉTER : adresse du prototype Client (application habitants) -->
+      <a class="bouton" id="lien-client" href="https://transparence.alexis-damien.fr">
+        Accéder au prototype
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </section>
+
+    <!-- ===== Espace Pilotage (décideurs) ===== -->
+    <section class="espace espace-pilotage" aria-labelledby="titre-pilotage">
+      <div class="pastille" aria-hidden="true">
+        <!-- Icône : un tableau de bord -->
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+      </div>
+      <p class="surtitre">Pour les décideurs</p>
+      <h2 id="titre-pilotage">O-Pure <span>Pilotage</span></h2>
+      <p class="accroche">L'état des 30 captages de la Métropole, et la simulation des traitements et de leur coût.</p>
+      <ul class="atouts">
+        <li>Mesures officielles de l'ARS</li>
+        <li>Simulateur de traitement</li>
+        <li>CO₂ évité grâce à Elixir</li>
+      </ul>
+      <a class="bouton" id="lien-pilotage" href="https://damesys2008-ship-it.github.io/o-pure/">
+        Accéder au prototype
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </section>
+
+  </main>
+
+  <footer class="pied">
+    O-Pure · Prototypes réalisés lors du Hackathon Hussar Academy, Orléans, octobre 2026
+  </footer>
+
+</body>
+</html>
